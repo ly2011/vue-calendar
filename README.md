@@ -1,34 +1,38 @@
-# vue-calendar
+# vue-calendar(移动端)
 
-## Project setup
+## 思路分析
+
+要实现一个简单的移动端日历，需要先知道几个值：
+
+- 每月有多少天
+
+- 每月第一天、最后一天各星期几
+
+- 每月1号之前应有多少天属于上一个月
+
+- 每月最后一天之后应有多少天属于下一个月
+
+> 每月最多31天，最少28天
+
+## 安装
 ```
 yarn install
 ```
 
-### Compiles and hot-reloads for development
+### 启动开发环境
 ```
 yarn run serve
 ```
 
-### Compiles and minifies for production
+### 生成库文件
 ```
-yarn run build
-```
-
-### Run your tests
-```
-yarn run test
+yarn run lib
 ```
 
-### Lints and fixes files
-```
-yarn run lint
-```
+## 效果图
 
-### Run your unit tests
-```
-yarn run test:unit
-```
+![](https://raw.githubusercontent.com/treadpit/wx_calendar/reconstruction/screenshot/calendar-example.png)
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## 参考文档
+
+1. [https://github.com/treadpit/wx_calendar](https://github.com/treadpit/wx_calendar)

@@ -4942,6 +4942,11 @@ isstream@~0.1.2:
   resolved "https://registry.npm.taobao.org/isstream/download/isstream-0.1.2.tgz#47e63f7af55afa6f92e1500e690eb8b8529c099a"
   integrity sha1-R+Y/evVa+m+S4VAOaQ64uFKcCZo=
 
+ittool@^0.1.7:
+  version "0.1.7"
+  resolved "https://registry.npmjs.org/ittool/-/ittool-0.1.7.tgz#c0445d7526290a6442b9d6e31d02d60bf3224ed9"
+  integrity sha512-ma34ngKPluZrXMnRluhvQ/unzJuNNiXgvDwAEmDVBb/WMqKud9pFaxReUK8m0eXH/i+ArHDwMnqhCFxkEjkh/w==
+
 javascript-stringify@^1.6.0:
   version "1.6.0"
   resolved "https://registry.npm.taobao.org/javascript-stringify/download/javascript-stringify-1.6.0.tgz#142d111f3a6e3dae8f4a9afd77d45855b5a9cce3"
