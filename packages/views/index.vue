@@ -32,7 +32,11 @@
           </li>
         </template>
         <li v-for="(item, index) in dateArr" :key="index" @click="tapDayItem(item)">
-          <span :class="item.choosed ? 'current': ''">{{item.day}}</span>
+          <v-popover v-if="item.status">
+            <span :class="item.choosed ? 'current': ''">{{item.day}}</span>
+            <template slot="popover">{{item.msg}}</template>
+          </v-popover>
+          <span v-else :class="item.choosed ? 'current': ''">{{item.day}}</span>
         </li>
         <template v-if="lastEmptyGrids">
           <li v-for="(item, index) in lastEmptyGrids" :key="'lastEmptyGrids' + index">
@@ -99,6 +103,8 @@ export default {
       const lastEmptyGrids = calculateNextMonthGrids(year, month)
       this.empytGrids = emptyGrids
       this.lastEmptyGrids = lastEmptyGrids
+
+      this.getTaskInfo() // TODO:
     },
     go (year, month) {
       this.render(year, month, true)
@@ -135,6 +141,13 @@ export default {
         })
       }
       item.choosed = !item.choosed
+    },
+    getTaskInfo () {
+      const taskInfo = [
+        { day: 8, status: 1, msg: '亲，您的任务快到期了' }
+      ]
+      this.dateArr = this.dateArr.map(dateItem => ({ ...dateItem, ...taskInfo.find(resItem => resItem.day === dateItem.day) }))
+      console.log(this.dateArr)
     }
   }
 }
@@ -261,6 +274,24 @@ $fontFamily: "PingFangSC-Regular", "Microsoft YaHei", Helvetica;
       border-radius: 50%;
       color: #fff;
       background-color: #ff9900;
+    }
+  }
+}
+
+.tooltip {
+  &.popover {
+    $color: #f9f9f9;
+
+    .popover-inner {
+      background: $color;
+      color: black;
+      padding: 8px;
+      border-radius: 5px;
+      box-shadow: 0 5px 30px rgba(black, 0.1);
+    }
+
+    .popover-arrow {
+      border-color: $color;
     }
   }
 }
