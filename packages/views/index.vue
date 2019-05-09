@@ -32,10 +32,12 @@
           </li>
         </template>
         <li v-for="(item, index) in dateArr" :key="index" @click="tapDayItem(item)">
-          <v-popover v-if="item.status">
-            <span :class="item.choosed ? 'current': ''">{{item.day}}</span>
-            <template slot="popover">{{item.msg}}</template>
-          </v-popover>
+          <template v-if="item.status">
+            <span class="badge" :class="item.choosed ? 'current': ''" v-tooltip="item.msg">
+              {{item.day}}
+              <sup class="badge__content is-fixed is-dot"></sup>
+            </span>
+          </template>
           <span v-else :class="item.choosed ? 'current': ''">{{item.day}}</span>
         </li>
         <template v-if="lastEmptyGrids">
@@ -144,10 +146,12 @@ export default {
     },
     getTaskInfo () {
       const taskInfo = [
-        { day: 8, status: 1, msg: '亲，您的任务快到期了' }
+        { day: 8, status: 1, msg: '亲，您的任务快到期了' },
+        { day: 9, status: 1, msg: '亲，母亲节快到了，礼物准备好了吗？' },
+        { day: 10, status: 1, msg: '亲，教节快到了，礼物准备好了吗？' }
       ]
       this.dateArr = this.dateArr.map(dateItem => ({ ...dateItem, ...taskInfo.find(resItem => resItem.day === dateItem.day) }))
-      console.log(this.dateArr)
+      // console.log(this.dateArr)
     }
   }
 }
@@ -260,6 +264,8 @@ $fontFamily: "PingFangSC-Regular", "Microsoft YaHei", Helvetica;
       list-style: none;
 
       span {
+        position: relative;
+        vertical-align: middle;
         display: inline-block;
         width: 26px;
         height: 26px;
@@ -275,24 +281,148 @@ $fontFamily: "PingFangSC-Regular", "Microsoft YaHei", Helvetica;
       color: #fff;
       background-color: #ff9900;
     }
+
+    .badge__content {
+      background-color: #f56c6c;
+      border-radius: 10px;
+      color: #fff;
+      display: inline-block;
+      font-size: 12px;
+      height: 18px;
+      line-height: 18px;
+      padding: 0 6px;
+      text-align: center;
+      white-space: nowrap;
+      border: 1px solid #fff;
+      &.is-fixed.is-dot {
+        top: 8px;
+        right: 5px;
+      }
+      &.is-fixed {
+        position: absolute;
+        top: 0;
+        right: 0;
+        transform: translateY(-50%) translateX(100%);
+      }
+      &.is-dot {
+        height: 8px;
+        width: 8px;
+        padding: 0;
+        right: 0;
+        border-radius: 50%;
+      }
+    }
   }
 }
 
 .tooltip {
+  display: block !important;
+  z-index: 10000;
+  font-size: $fontSize;
+
+  .tooltip-inner {
+    background: black;
+    color: white;
+    border-radius: 5px;
+    padding: 3px 5px 2px;
+  }
+
+  .tooltip-arrow {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    position: absolute;
+    margin: 5px;
+    border-color: black;
+    z-index: 1;
+  }
+
+  &[x-placement^="top"] {
+    margin-bottom: 5px;
+
+    .tooltip-arrow {
+      border-width: 5px 5px 0 5px;
+      border-left-color: transparent !important;
+      border-right-color: transparent !important;
+      border-bottom-color: transparent !important;
+      bottom: -5px;
+      left: calc(50% - 5px);
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  }
+
+  &[x-placement^="bottom"] {
+    margin-top: 5px;
+
+    .tooltip-arrow {
+      border-width: 0 5px 5px 5px;
+      border-left-color: transparent !important;
+      border-right-color: transparent !important;
+      border-top-color: transparent !important;
+      top: -5px;
+      left: calc(50% - 5px);
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  }
+
+  &[x-placement^="right"] {
+    margin-left: 5px;
+
+    .tooltip-arrow {
+      border-width: 5px 5px 5px 0;
+      border-left-color: transparent !important;
+      border-top-color: transparent !important;
+      border-bottom-color: transparent !important;
+      left: -5px;
+      top: calc(50% - 5px);
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+
+  &[x-placement^="left"] {
+    margin-right: 5px;
+
+    .tooltip-arrow {
+      border-width: 5px 0 5px 5px;
+      border-top-color: transparent !important;
+      border-right-color: transparent !important;
+      border-bottom-color: transparent !important;
+      right: -5px;
+      top: calc(50% - 5px);
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+
   &.popover {
     $color: #f9f9f9;
 
     .popover-inner {
       background: $color;
       color: black;
-      padding: 8px;
+      padding: 24px;
       border-radius: 5px;
-      box-shadow: 0 5px 30px rgba(black, 0.1);
+      box-shadow: 0 5px 30px rgba(black, .1);
     }
 
     .popover-arrow {
       border-color: $color;
     }
+  }
+
+  &[aria-hidden='true'] {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity .15s, visibility .15s;
+  }
+
+  &[aria-hidden='false'] {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity .15s;
   }
 }
 </style>
